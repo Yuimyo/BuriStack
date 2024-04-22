@@ -8,8 +8,14 @@ function interpret(assemblyText: string) {
 
     let builder = new TreeBuilder(tok);
     let node: TreeNode | null = builder.build_tree();
-    const json = JSON.stringify(node);
-    console.log(`${json}`);
+    for (; node != null; node = node.next) {
+        let nextNode: TreeNode | null = node.next;
+        node.next = null;
+
+        const json = JSON.stringify(node);
+        console.log(`${json}`);
+        node.next = nextNode;
+    }
 }
 
 fs.readFile('tmp.s', 'utf8', (err, data) => {

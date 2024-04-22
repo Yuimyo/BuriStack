@@ -5,11 +5,20 @@ const regList: string[] = ["rax", "rsp", "rbp", "rdi"];
 export enum TreeNodeKind {
     Empty,     // TreeNodeインスタンス化時の初期値
     Directive, // .intel_syntax, .globl, etc...
-    Label,     // main:, etc...
+    LabelTo,   // main:, etc...
+    LabelFrom, // 
     Regist,    // rax, rbp, etc...
     RegistRef, // [rax], [rbp], etc...
     Num,       // 0, 23, etc...
     Mov,       // mov
+    Ret,       // ret
+    Push,      // push
+    Pop,       // pop
+    Cmp,       // cmp
+    Je,        // je
+    Jmp,       // jmp
+    Add,       // add
+    Sub,       // sub
 }
 
 export class TreeNode {
@@ -112,7 +121,9 @@ export class TreeBuilder {
     // dirc   := Directive text
     // lorder := label? order
     // label  := Label
-    // order  := "mov"  value "," value
+    // order  := "mov"  value "," value |
+    //           "ret" |
+    //           ...
     // value  := num | reg | "[" reg "]"
     // reg    := "rax" | "rsp" | "rbp" | ...
     stmt(): TreeNode | null {
@@ -133,7 +144,7 @@ export class TreeBuilder {
         if (this.token != null && this.token?.kind == TokenKind.Label) {
             let label = this.token?.str;
             let node = new TreeNode();
-            node.kind = TreeNodeKind.Label;
+            node.kind = TreeNodeKind.LabelTo;
             node.name = label;
             this.roll();
             node.lhs = this.order();
@@ -146,6 +157,51 @@ export class TreeBuilder {
         let node = new TreeNode();
         if (this.consumeText("mov")) {
             node.kind = TreeNodeKind.Mov;
+            node.lhs = this.value();
+            this.expectReserved(',');
+            node.rhs = this.value();
+        }
+        else if (this.consumeText("ret")) {
+            node.kind = TreeNodeKind.Ret;
+        }
+        else if (this.consumeText("push")) {
+            node.kind = TreeNodeKind.Push;
+            node.lhs = this.value();
+        }
+        else if (this.consumeText("pop")) {
+            node.kind = TreeNodeKind.Pop;
+            node.lhs = this.value(); // TODO: numは多分禁止されてる
+        }
+        else if (this.consumeText("cmp")) {
+            node.kind = TreeNodeKind.Cmp;
+            node.lhs = this.value();
+            this.expectReserved(',');
+            node.rhs = this.value();
+        }
+        else if (this.consumeText("je")) {
+            node.kind = TreeNodeKind.Je;
+            let assumeLabelToken = this.expectText();
+            let assumeLabel = new TreeNode();
+            assumeLabel.kind = TreeNodeKind.LabelFrom;
+            assumeLabel.name = assumeLabelToken.str;
+            node.lhs = assumeLabel;
+        }
+        else if (this.consumeText("jmp")) {
+            node.kind = TreeNodeKind.Jmp;
+            let assumeLabelToken = this.expectText();
+            let assumeLabel = new TreeNode();
+            assumeLabel.kind = TreeNodeKind.LabelFrom;
+            assumeLabel.name = assumeLabelToken.str;
+            node.lhs = assumeLabel;
+        }
+        else if (this.consumeText("add")) {
+            node.kind = TreeNodeKind.Add;
+            node.lhs = this.value();
+            this.expectReserved(',');
+            node.rhs = this.value();
+        }
+        else if (this.consumeText("sub")) {
+            node.kind = TreeNodeKind.Sub;
             node.lhs = this.value();
             this.expectReserved(',');
             node.rhs = this.value();
