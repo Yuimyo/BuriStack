@@ -217,6 +217,7 @@ export class TreeBuilder {
             let node = new TreeNode();
             node.kind = TreeNodeKind.Num;
             node.val = this.token?.val ?? -1;
+            this.roll();
             return node;
         }
         else if (this.consumeReserved('[')) {
