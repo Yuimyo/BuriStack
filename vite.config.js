@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { vitePlugin as remix } from "@remix-run/dev";
 import { installGlobals } from "@remix-run/node";
 import { defineConfig } from "vite";
@@ -13,4 +14,6 @@ export default defineConfig({
       "**/*.scss",
     ],
   }), tsconfigPaths()],
+  test: {
+  },
 });

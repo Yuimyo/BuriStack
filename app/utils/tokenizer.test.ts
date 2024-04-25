@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { Token, TokenKind } from "./tokenizer";
 
 function isAlmostSameToken(actual: Token | null, expectWithoutNext: Token | null): Token | null {

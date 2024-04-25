@@ -6,24 +6,23 @@
   "main": "index.js",
   "scripts": {
     "build": "remix vite:build",
-    "dev:remix": "remix vite:dev"
+    "dev:remix": "remix vite:dev",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@remix-run/dev": "^2.9.1",
-    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
-    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
-    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^1.5.1"
   },
   "dependencies": {
     "@remix-run/node": "^2.9.1",
