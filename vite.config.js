@@ -14,6 +14,11 @@ export default defineConfig({
       "**/*.scss",
     ],
   }), tsconfigPaths()],
+  css: {
+    modules: {
+      localsConvention: "camelCaseOnly"
+    }
+  },
   test: {
   },
 });

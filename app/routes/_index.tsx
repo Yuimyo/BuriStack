@@ -1,5 +1,8 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { interpret } from "~/utils/interpreter";
+import "./index.scss";
+import Test1 from "~/components/Test1";
+import Test2 from "~/components/Test2";
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,12 +32,17 @@ export default function Index() {
   const tree_jsons = interpret(asm);
 
   return (
-    <div style={{ whiteSpace: "nowrap" }}>
-      {tree_jsons.map((line, index) => (
-        <div key={index}>
-          <div>{line}</div>
-        </div>
-      ))}
+    <div>
+      <Test1 />
+      <Test2 />
+      <div style={{ whiteSpace: "nowrap" }}>
+        {tree_jsons.map((line, index) => (
+          <div key={index}>
+            <div className="hoge" >{line}</div>
+          </div>
+        ))}
+      </div>
     </div>
+
   );
 }

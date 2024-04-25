@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "npm run dev:remix",
     "build": "remix vite:build",
     "dev:remix": "remix vite:dev",
     "test": "vitest"
@@ -17,7 +18,11 @@
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
+    "autoprefixer": "^10.4.19",
     "nodemon": "^3.1.0",
+    "postcss": "^8.4.38",
+    "postcss-load-config": "^5.0.3",
+    "sass": "^1.75.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
