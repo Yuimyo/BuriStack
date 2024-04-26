@@ -82,6 +82,7 @@ export default tseslint.config(
         files: ["**/*.{ts,tsx}"],
         plugins: {
             import: importPlugin,
+            "@typescript-eslint": tseslint,
         },
         extends: [
             ...tseslint.configs.recommended,
@@ -96,6 +97,9 @@ export default tseslint.config(
                 typescript: {
                     alwaysTryTypes: true,
                     project: "tsconfig.json",
+                },
+                rules: {
+                    "@typescript-eslint/no-unused-vars": ["off", {}],
                 },
             },
         },
