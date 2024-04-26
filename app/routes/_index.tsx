@@ -9,6 +9,7 @@ import AssemblyCodeSelector, {
     links as assemblyCodeSelectorLinks,
 } from "~/components/AssemblyCodeSelector";
 import BracketEnd, { links as bracketEndLinks } from "~/components/BracketEnd";
+import StackItem, { links as stackItemLinks } from "~/components/StackItem";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -27,6 +28,7 @@ export const links: LinksFunction = () => [
     ...assemblyCodeInputLinks(),
     ...assemblyCodeSelectorLinks(),
     ...bracketEndLinks(),
+    ...stackItemLinks(),
     ...test1Links(),
     ...test2Links(),
 ];
@@ -55,6 +57,18 @@ export default function Index() {
         <div>
             <Button>永いエラーと奮闘と奮闘の末</Button>
             <AssemblyCodeInput />
+            <StackItem
+                width={100}
+                height={70}
+                description={"text"}
+                lore={"13"}
+            />
+            <StackItem
+                width={100}
+                height={70}
+                description={"aataateatea-^p12p@"}
+                lore={"5"}
+            />
             <AssemblyCodeSelector
                 defaultValue={0}
                 data={["sub rax, 8", "mov 2, rax"]}

@@ -1,0 +1,100 @@
+.component-StackItem {
+    .stk {
+        --area-width: 100px;
+        --area-height: 40px;
+        --area-width-pad: 4px;
+        --area-col-main: rgb(141 193 170);
+        --scroll-height: 8px;
+        --scroll-border: 2px;
+        border-radius: 4px;
+        margin: 2px;
+
+        width: var(--area-width);
+        height: var(--area-height);
+        position: relative;
+
+        background-color: var(--area-col-main);
+
+        .stk-inside {
+            height: 100%;
+            padding: 0 var(--area-width-pad) 0 var(--area-width-pad);
+
+            font-size: 14px;
+            border-radius: 4px;
+
+            overflow: scroll hidden;
+            text-align: center;
+
+            background-color: var(--area-col-main);
+
+            /* background-color: blueviolet; */
+
+            .stk-description {
+                font-size: 1em;
+
+                white-space: nowrap;
+                display: inline-block;
+
+                /* background-color: red; */
+                transform: translateY(
+                    calc(
+                        var(--area-height) * 0.5 - 1em + var(--scroll-height) *
+                            0.5
+                    )
+                );
+                color: white;
+                text-shadow:
+                    0 0 4px black,
+                    0 0 2px black,
+                    1px 1px 1px black;
+            }
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: var(--scroll-height);
+            }
+
+            &::-webkit-scrollbar-track {
+                border-radius: 15px;
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: var(--scroll-height);
+                border-style: solid;
+                border-width: var(--scroll-border);
+                border-color: var(--area-col-main);
+                background-color: hsl(0deg 0% 100% / 90%);
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: hsl(0deg 0% 90% / 80%);
+            }
+
+            &::-webkit-scrollbar-thumb:active {
+                background-color: hsl(0deg 0% 20% / 40%);
+            }
+        }
+
+        .stk-outside {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 2px;
+            transform: translateX(calc(100%));
+
+            /* background-color: red; */
+
+            .stk-lore {
+                display: flex;
+                align-items: center;
+
+                font-size: 12px;
+                color: white;
+            }
+        }
+    }
+}
