@@ -5,6 +5,9 @@ import Button, { links as buttonLinks } from "~/components/Button";
 import AssemblyCodeInput, {
     links as assemblyCodeInputLinks,
 } from "~/components/AssemblyCodeInput";
+import AssemblyCodeSelector, {
+    links as assemblyCodeSelectorLinks,
+} from "~/components/AssemblyCodeSelector";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -21,6 +24,7 @@ export const links: LinksFunction = () => [
     { rel: "stylesheet", href: styles },
     ...buttonLinks(),
     ...assemblyCodeInputLinks(),
+    ...assemblyCodeSelectorLinks(),
     ...test1Links(),
     ...test2Links(),
 ];
@@ -49,6 +53,11 @@ export default function Index() {
         <div>
             <Button>永いエラーと奮闘と奮闘の末</Button>
             <AssemblyCodeInput />
+            <AssemblyCodeSelector
+                defaultValue={0}
+                data={["sub rax, 8", "mov 2, rax"]}
+            ></AssemblyCodeSelector>
+
             <Test1 />
             <Test2 />
             <div style={{ whiteSpace: "nowrap" }}>
