@@ -10,6 +10,9 @@ import AssemblyCodeSelector, {
 } from "~/components/AssemblyCodeSelector";
 import BracketEnd, { links as bracketEndLinks } from "~/components/BracketEnd";
 import StackItem, { links as stackItemLinks } from "~/components/StackItem";
+import StackStatusViewer, {
+    links as stackStatusViewerLinks,
+} from "~/components/StackStatusViewer";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -29,6 +32,7 @@ export const links: LinksFunction = () => [
     ...assemblyCodeSelectorLinks(),
     ...bracketEndLinks(),
     ...stackItemLinks(),
+    ...stackStatusViewerLinks(),
     ...test1Links(),
     ...test2Links(),
 ];
@@ -74,7 +78,7 @@ export default function Index() {
                 data={["sub rax, 8", "mov 2, rax"]}
             ></AssemblyCodeSelector>
             <BracketEnd width={50} height={50} thickness={4} />
-
+            <StackStatusViewer />
             <Test1 />
             <Test2 />
             <div style={{ whiteSpace: "nowrap" }}>

@@ -1,0 +1,208 @@
+.component-StackStatusViewer {
+    --col-focusing: rgba(100 169 190 / 75%);
+
+    .container-stk {
+        --area-width: 300px;
+        --area-height: 500px;
+        --area-header-height: 40px;
+        --area-border-radius: 4px;
+        --stk-margin-y: 40px;
+        --stk-scrollbar-thickness: 8px;
+        --col-subtext: color-mix(white 50%, black 50%);
+        --col-bg-main: #191919;
+        width: var(--area-width);
+        position: relative;
+        color: white;
+
+        /* background-color: rgba(174, 124, 124, 0.364); */
+        --col-shadow: rgba(0 0 25 / 25%);
+        --shadow-len: 2px;
+
+        .container-stk-head {
+            width: var(--area-width);
+            height: var(--area-header-height);
+            border-top-left-radius: var(--area-border-radius);
+            border-top-right-radius: var(--area-border-radius);
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 0 var(--shadow-len) var(--shadow-len)
+                var(--col-shadow);
+            background-color: var(--col-bg-main);
+
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+
+            position: relative;
+
+            .pos-left,
+            .pos-mid,
+            .pos-right {
+                display: flex;
+                align-items: center;
+            }
+
+            .pos-left {
+                justify-content: start;
+
+                /* background-color: #13ae734e; */
+                padding-left: 12px;
+
+                position: relative;
+
+                .stk-linerow {
+                    font-size: 15px;
+                    position: absolute;
+                    left: 3px;
+                    bottom: 0;
+                    transform: translateY(100%);
+
+                    color: var(--col-subtext);
+
+                    /* background-color: green; */
+
+                    &::after {
+                        content: "行目";
+                        font-size: 8px;
+                        white-space: nowrap;
+
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        transform: translateX(calc(100% + 1px))
+                            translateY(calc(-50%));
+
+                        color: var(--col-subtext);
+
+                        /* background-color: red; */
+                    }
+                }
+            }
+
+            .pos-mid {
+                justify-content: center;
+                white-space: nowrap;
+
+                /* background-color: #82ae134e; */
+
+                .container-stk-title {
+                    font-size: 18px;
+                }
+            }
+
+            .pos-right {
+                justify-content: end;
+
+                /* background-color: #ae75134e; */
+            }
+
+            /* 
+            // &::after {
+            //     // shadow
+            //     content: "";
+            //     width: var(--area-width;
+            //     height: 4px;
+            //     position: absolute;
+            //     left: 0px;
+            //     top: var(--area-header-height;
+            //     background-image: linear-gradient(180deg, var(--col-shadow, rgba(255, 255, 255, 0));
+            // } */
+        }
+
+        .container-stk-main {
+            overflow-y: scroll;
+            height: calc(var(--area-height) - var(--area-header-height));
+            border-bottom-left-radius: var(--area-border-radius);
+            border-bottom-right-radius: var(--area-border-radius);
+
+            display: grid;
+            place-items: center;
+            place-content: start space-evenly;
+
+            background: var(--col-bg-main);
+
+            .container-stk-draw {
+                /* background-color: red; */
+                margin: 4px 0 var(--stk-margin-y) 0;
+            }
+
+            &::-webkit-scrollbar {
+                width: var(--stk-scrollbar-thickness);
+                height: 8px;
+                cursor: pointer;
+            }
+
+            &::-webkit-scrollbar-track {
+                border-radius: 15px;
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-corner {
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 20px;
+                background-color: var(--col-textarea-scroll);
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: color-mix(
+                    var(--col-textarea-scroll) 85%,
+                    white 15%
+                );
+            }
+
+            &::-webkit-scrollbar-thumb:active {
+                background-color: color-mix(
+                    var(--col-textarea-scroll) 85%,
+                    black 15%
+                );
+            }
+        }
+
+        .container-stk-below {
+            width: var(--area-width);
+            position: absolute;
+
+            .container-stk-fading {
+                width: calc(
+                    var(--area-width) -
+                        max(
+                            var(--area-border-radius),
+                            var(--stk-scrollbar-thickness)
+                        ) * 2
+                );
+                height: var(--stk-margin-y);
+                position: absolute;
+                background-image: linear-gradient(
+                    0deg,
+                    var(--col-bg-main),
+                    rgba(255 255 255 / 0%)
+                );
+                left: max(
+                    var(--area-border-radius),
+                    var(--stk-scrollbar-thickness)
+                );
+                bottom: 0;
+            }
+
+            .container-stk-scalebar {
+                width: var(--area-width);
+                height: 6px;
+                position: absolute;
+                top: -3px;
+                background-color: rgba(85 85 255 0%);
+                cursor: grab;
+                border-radius: 2px;
+
+                &:hover {
+                    background-color: var(--col-focusing);
+                }
+
+                &:active {
+                    cursor: grabbing;
+                }
+            }
+        }
+    }
+}
