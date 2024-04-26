@@ -8,9 +8,11 @@ import {
 import destyles from "~/destyle.css?url";
 
 import type { LinksFunction } from "@remix-run/node";
+import { links as indexLinks } from "~/routes/_index";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: destyles },
+  ...indexLinks(),
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

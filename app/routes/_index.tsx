@@ -1,8 +1,8 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { interpret } from "~/utils/interpreter";
 import "./index.scss";
-import Test1 from "~/components/Test1";
-import Test2 from "~/components/Test2";
+import Test1, { links as test1Links } from "~/components/Test1";
+import Test2, { links as test2Links } from "~/components/Test2";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,6 +10,10 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Assembly言語におけるスタックの挙動を可視化します。自分用。" },
   ];
 };
+
+export const links: LinksFunction = () => [
+  ...test1Links(),
+];
 
 export default function Index() {
   const asm = `
