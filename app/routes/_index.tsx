@@ -8,6 +8,7 @@ import AssemblyCodeInput, {
 import AssemblyCodeSelector, {
     links as assemblyCodeSelectorLinks,
 } from "~/components/AssemblyCodeSelector";
+import BracketEnd, { links as bracketEndLinks } from "~/components/BracketEnd";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -25,6 +26,7 @@ export const links: LinksFunction = () => [
     ...buttonLinks(),
     ...assemblyCodeInputLinks(),
     ...assemblyCodeSelectorLinks(),
+    ...bracketEndLinks(),
     ...test1Links(),
     ...test2Links(),
 ];
@@ -57,6 +59,7 @@ export default function Index() {
                 defaultValue={0}
                 data={["sub rax, 8", "mov 2, rax"]}
             ></AssemblyCodeSelector>
+            <BracketEnd width={50} height={50} thickness={4} />
 
             <Test1 />
             <Test2 />

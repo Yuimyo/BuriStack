@@ -1,0 +1,121 @@
+.component-BracketEnd {
+    .bracket {
+        --bracket-width: 20px;
+        --bracket-height: 40px;
+        --bracket-thickness: 2px;
+        --bracket-padding: 4px;
+        --bracket-color: rgb(200 200 200);
+
+        /* background-color: darkblue; // test */
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        --actual-bracket-width: calc(
+            var(--bracket-width) - var(--bracket-padding) * 2
+        );
+        --actual-bracket-height: calc(
+            var(--bracket-height) - var(--bracket-padding) * 2
+        );
+
+        .bracket-above {
+            position: relative;
+            width: var(--actual-bracket-width);
+            height: calc(var(--actual-bracket-height) * 0.5);
+            margin-top: var(--bracket-padding);
+            margin-left: var(--bracket-padding);
+            margin-right: var(--bracket-padding);
+
+            &::before,
+            &::after {
+                content: "";
+                width: calc(
+                    var(--actual-bracket-width) * 0.5 - var(--bracket-thickness) *
+                        0.5
+                );
+                height: calc(
+                    var(--actual-bracket-height) * 0.25 -
+                        var(--bracket-thickness) * 0.75
+                );
+
+                position: absolute;
+
+                border-radius: 0;
+                border-width: 0;
+                border-style: solid;
+                border-color: var(--bracket-color);
+            }
+
+            &::before {
+                top: 0;
+                left: 0;
+                border-top-right-radius: 20px;
+                border-top-width: var(--bracket-thickness);
+                border-right-width: var(--bracket-thickness);
+
+                /* border-color: rgba(192, 255, 242, 0.299); */
+            }
+
+            &::after {
+                right: 0;
+                bottom: calc(var(--bracket-thickness) * -0.5);
+                border-bottom-left-radius: 20px;
+                border-left-width: var(--bracket-thickness);
+                border-bottom-width: var(--bracket-thickness);
+
+                /* border-color: rgba(255, 192, 203, 0.45); */
+            }
+        }
+
+        .bracket-below {
+            position: relative;
+            width: var(--actual-bracket-width);
+            height: calc(var(--actual-bracket-height) * 0.5);
+            margin-bottom: var(--bracket-padding);
+            margin-left: var(--bracket-padding);
+            margin-right: var(--bracket-padding);
+
+            &::before,
+            &::after {
+                content: "";
+                width: calc(
+                    var(--actual-bracket-width) * 0.5 - var(--bracket-thickness) *
+                        0.5
+                );
+                height: calc(
+                    var(--actual-bracket-height) * 0.25 -
+                        var(--bracket-thickness) * 0.75
+                );
+
+                position: absolute;
+
+                border-radius: 0;
+                border-width: 0;
+                border-style: solid;
+                border-color: var(--bracket-color);
+            }
+
+            &::before {
+                top: calc(var(--bracket-thickness) * -0.5);
+                right: 0;
+                border-top-left-radius: 20px;
+                border-top-width: var(--bracket-thickness);
+                border-left-width: var(--bracket-thickness);
+
+                /* border-color: rgba(192, 255, 242, 0.299); */
+            }
+
+            &::after {
+                bottom: 0;
+                left: 0;
+                border-bottom-right-radius: 20px;
+                border-right-width: var(--bracket-thickness);
+                border-bottom-width: var(--bracket-thickness);
+
+                /* border-color: rgba(255, 192, 203, 0.45); */
+            }
+        }
+    }
+}
