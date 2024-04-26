@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => [
   ...test1Links(),
+  ...test2Links(),
 ];
 
 export default function Index() {

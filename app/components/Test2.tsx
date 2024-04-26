@@ -1,4 +1,9 @@
-import styles from "./Test2.module.scss";
+import { LinksFunction } from "@remix-run/node";
+import styles from "./Test2.css?url";
+
+export const links: LinksFunction = () => [
+    { rel: "stylesheet", href: styles },
+];
 
 export default function Test2() {
     return (
@@ -8,10 +13,7 @@ export default function Test2() {
             <div className="hogeA">Test2hogeA</div>
             <div className="hoge2">Test2hoge2</div>
             <div className="hogeB">Test2hogeB</div>
-            <div className={styles.hoge}>Test2hogeMod</div>
-            <div className={styles.hoge2}>Test2hoge2Mod</div>
-            <div className={styles.hogeB}>Test2hogeBMod</div>
-            <div className={styles.hogeAutoprefixer}>
+            <div className="hoge-autoprefixer">
                 <div>test</div>
             </div>
         </div>
