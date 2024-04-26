@@ -1,0 +1,50 @@
+.component-Button {
+    --col-focusing: rgb(100 169 190 / 75%);
+
+    .btn {
+        --col-btn-l: 15%;
+        --col-shadow: rgba(0 0 0 / 30%);
+        --text-padding: 10px;
+        --range-push: 2px;
+        --shadow-len: 2px;
+        cursor: pointer;
+        padding: var(--text-padding);
+        border-radius: 10px;
+        border: 0 solid transparent;
+        margin: var(--range-push) 0 var(--range-push) 0;
+
+        font-size: 1rem;
+
+        background-color: hsl(0deg 0 var(--col-btn-l));
+        background-image: linear-gradient(
+            150deg,
+            hsl(0deg 0 calc(var(--col-btn-l) + 5)),
+            hsl(0deg 0 calc(var(--col-btn-l) - 5))
+        );
+
+        color: white;
+
+        box-shadow: 0 calc(1px + var(--range-push)) var(--shadow-len)
+            var(--shadow-len) var(--col-shadow);
+        outline: 1px dashed transparent;
+        outline-offset: -2px;
+
+        transition:
+            background-color 0.05s,
+            outline 0.3s;
+
+        &:hover {
+            background-color: hsl(0deg 0% calc(var(--col-btn-l) + 7%));
+        }
+
+        &:active {
+            transform: translateY(var(--range-push));
+            box-shadow: 0 1px var(--shadow-len) var(--shadow-len)
+                var(--col-shadow);
+        }
+
+        &:focus {
+            outline: 1px dashed var(--col-focusing);
+        }
+    }
+}
