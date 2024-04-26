@@ -6,8 +6,13 @@
         var(--col-textarea) 90%,
         white 20%
     );
+    width: 100%;
+    height: 100%;
 
     .asm-form {
+        width: 100%;
+        height: 100%;
+
         font-family: monospace;
         font-weight: 400;
         font-style: normal;
@@ -26,10 +31,11 @@
         border: 1px solid transparent;
 
         border-radius: 4px;
-        padding: 4px;
 
+        padding: 4px;
         overflow-x: scroll;
         white-space: nowrap;
+        resize: none;
 
         &::-webkit-scrollbar {
             width: 8px;
@@ -68,23 +74,11 @@
         }
         outline: 1px dashed transparent;
         outline-offset: -2px;
-
         transition: outline 0.3s;
 
         &:focus {
             outline: 1px dashed var(--col-focusing);
         }
-        width: 200px;
-        height: 200px;
-
-        resize: vertical;
-        min-width: 100px;
-        max-width: 500px;
-        min-height: 100px;
-        max-height: 500px;
-
         font-size: 15px;
-
-        margin: 5px;
     }
 }

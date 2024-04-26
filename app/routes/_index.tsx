@@ -15,6 +15,8 @@ import StackStatusViewer, {
 } from "~/components/StackStatusViewer";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
+import logo from "~/logo.png";
+import { useState } from "react";
 
 // prettier-ignore
 export const meta: MetaFunction = () => {
@@ -38,7 +40,7 @@ export const links: LinksFunction = () => [
 ];
 
 export default function Index() {
-    const asm = `
+    const asm_tmp = `
   .intel_syntax noprefix
   .globl main
   main:
@@ -55,31 +57,60 @@ export default function Index() {
     push rdi
     pop rax
   `;
-    const tree_jsons = interpret(asm);
+
+    const [asm, setAsm] = useState("");
+    const [asmLine, setAsmLine] = useState<string[]>([]);
+    const [asmParsedLine, setAsmParsedLine] = useState<string[]>([]);
+
+    const handleTextInput = (text: string) => {
+        setAsm(text);
+        const lines: string[] = [];
+        text.split(/\n/).forEach((line, index) => {
+            if (line.trim() != "") lines.push(line);
+        });
+        setAsmLine(lines);
+    };
+
+    const handleExecute = () => {
+        const tree_jsons = interpret(asm_tmp);
+        const lines: string[] = [];
+        asm.split(/\n/).forEach((line, index) => {
+            if (line.trim() != "") lines.push(line);
+        });
+        setAsmParsedLine(lines);
+    };
 
     return (
-        <div>
-            <Button>永いエラーと奮闘と奮闘の末</Button>
-            <AssemblyCodeInput />
-            <StackItem
-                width={100}
-                height={70}
-                description={"text"}
-                lore={"13"}
-            />
-            <StackItem
-                width={100}
-                height={70}
-                description={"aataateatea-^p12p@"}
-                lore={"5"}
-            />
-            <AssemblyCodeSelector
-                defaultValue={0}
-                data={["sub rax, 8", "mov 2, rax"]}
-            ></AssemblyCodeSelector>
-            <BracketEnd width={50} height={50} thickness={4} />
-            <StackStatusViewer />
-            <Test1 />
+        <div className="route-index">
+            <div className="header">
+                <div className="logo-container">
+                    <img className="logo-data" src={logo} />
+                </div>
+                <Button onClick={() => handleExecute()}>実行</Button>
+            </div>
+            <div className="midder">
+                <div className="main-content">
+                    <div className="code-input">
+                        <AssemblyCodeInput
+                            onChange={(e) => {
+                                handleTextInput(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className="code-select">
+                        <AssemblyCodeSelector
+                            defaultValue={0}
+                            data={asmParsedLine}
+                        ></AssemblyCodeSelector>
+                    </div>
+                    <div className="stack-field">
+                        <StackStatusViewer />
+                    </div>
+                </div>
+            </div>
+            <div className="footer"></div>
+
+            {/* <Test1 />
             <Test2 />
             <div style={{ whiteSpace: "nowrap" }}>
                 {tree_jsons.map((line, index) => (
@@ -87,7 +118,7 @@ export default function Index() {
                         <div className="hoge">{line}</div>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }

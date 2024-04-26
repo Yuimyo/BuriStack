@@ -29,6 +29,12 @@ export default function StackStatusViewer({}: StackStatusViewerProps) {
         "aafaf",
         "9-0ai09x",
         "0x013213",
+        "9-0ai09x",
+        "0x013213",
+        "afaf",
+        "aafaf",
+        "9-0ai09x",
+        "0x013213",
     ];
 
     return (
@@ -47,6 +53,7 @@ export default function StackStatusViewer({}: StackStatusViewerProps) {
                     <div className="container-stk-draw">
                         {data.map((line, index) => (
                             <StackItem
+                                key={index}
                                 width={100}
                                 height={70}
                                 description={line}

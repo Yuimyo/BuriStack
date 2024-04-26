@@ -40,7 +40,7 @@ export default function AssemblyCodeSelector({
                         key={index}
                         onClick={() => handleButtonClick(index + 1)}
                     >
-                        {line}
+                        <pre>{line}</pre>
                     </button>
                 ))}
             </div>
