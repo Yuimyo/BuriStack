@@ -1,11 +1,13 @@
-.component-Test1 .hoge {
-  background-color: red;
-}
-.component-Test1 .hoge1 {
-  border: 1px solid orange;
-}
-.component-Test1 .hogeA {
-  color: rgb(255, 0, 132);
-}
+.component-Test1 {
+.hoge {
+    background-color: red;
+  }
 
-/*# sourceMappingURL=Test1.css.map */
+  .hoge1 {
+    border: 1px solid orange;
+  }
+
+  .hogeA {
+    color: rgb(255, 0, 132);
+  }
+}

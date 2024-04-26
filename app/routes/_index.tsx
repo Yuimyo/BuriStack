@@ -1,6 +1,6 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { interpret } from "~/utils/interpreter";
-import "./index.scss";
+import styles from "./index.css?url";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -12,6 +12,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
   ...test1Links(),
   ...test2Links(),
 ];

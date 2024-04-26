@@ -1,19 +1,21 @@
-.hoge {
-    background-color: blue;
-}
+.component-Test2 {
+    .hoge {
+        background-color: blue;
+    }
 
-.hoge2 {
-    border: 1px solid aqua;
-}
+    .hoge2 {
+        border: 1px solid aqua;
+    }
 
-.hogeB {
-    color: rgb(0, 255, 162);
-}
+    .hogeB {
+        color: rgb(0, 255, 162);
+    }
 
-.hoge-autoprefixer {
-    height: 100px;
-    background-color: crimson;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .hoge-autoprefixer {
+        height: 100px;
+        background-color: crimson;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

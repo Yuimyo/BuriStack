@@ -7,7 +7,7 @@ export const links: LinksFunction = () => [
 
 export default function Test2() {
     return (
-        <div>
+        <div className="component-Test2">
             <div className="hoge">Test2hoge</div>
             <div className="hoge1">Test2hoge1</div>
             <div className="hogeA">Test2hogeA</div>
