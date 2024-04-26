@@ -2,6 +2,9 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { interpret } from "~/utils/interpreter";
 import styles from "./index.css?url";
 import Button, { links as buttonLinks } from "~/components/Button";
+import AssemblyCodeInput, {
+    links as assemblyCodeInputLinks,
+} from "~/components/AssemblyCodeInput";
 import Test1, { links as test1Links } from "~/components/Test1";
 import Test2, { links as test2Links } from "~/components/Test2";
 
@@ -17,6 +20,7 @@ export const meta: MetaFunction = () => {
 export const links: LinksFunction = () => [
     { rel: "stylesheet", href: styles },
     ...buttonLinks(),
+    ...assemblyCodeInputLinks(),
     ...test1Links(),
     ...test2Links(),
 ];
@@ -44,6 +48,7 @@ export default function Index() {
     return (
         <div>
             <Button>永いエラーと奮闘と奮闘の末</Button>
+            <AssemblyCodeInput />
             <Test1 />
             <Test2 />
             <div style={{ whiteSpace: "nowrap" }}>
