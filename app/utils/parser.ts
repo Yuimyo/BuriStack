@@ -3,22 +3,22 @@ import { Token, TokenKind } from "./tokenizer";
 const regList: string[] = ["rax", "rsp", "rbp", "rdi"];
 
 export enum TreeNodeKind {
-    Empty,     // TreeNodeインスタンス化時の初期値
-    Directive, // .intel_syntax, .globl, etc...
-    LabelTo,   // main:, etc...
-    LabelFrom, // 
-    Regist,    // rax, rbp, etc...
-    RegistRef, // [rax], [rbp], etc...
-    Num,       // 0, 23, etc...
-    Mov,       // mov
-    Ret,       // ret
-    Push,      // push
-    Pop,       // pop
-    Cmp,       // cmp
-    Je,        // je
-    Jmp,       // jmp
-    Add,       // add
-    Sub,       // sub
+    Empty, /////// TreeNodeインスタンス化時の初期値
+    Directive, /// .intel_syntax, .globl, etc...
+    LabelTo, ///// main:, etc...
+    LabelFrom, ///
+    Regist, ////// rax, rbp, etc...
+    RegistRef, /// [rax], [rbp], etc...
+    Num, ///////// 0, 23, etc...
+    Mov, ///////// mov
+    Ret, ///////// ret
+    Push, //////// push
+    Pop, ///////// pop
+    Cmp, ///////// cmp
+    Je, ////////// je
+    Jmp, ///////// jmp
+    Add, ///////// add
+    Sub, ///////// sub
 }
 
 export class TreeNode {
@@ -26,8 +26,8 @@ export class TreeNode {
     next: TreeNode | null;
     lhs: TreeNode | null;
     rhs: TreeNode | null;
-    val: number; // this.kind == TreeNodeKind.Num のときのみ使用
-    name: string; // this.kind == TreeNodeKind.Label, TreeNodeKind.Directive のときのみ使用
+    val: number; ///// this.kind == TreeNodeKind.Num のときのみ使用
+    name: string; //// this.kind == TreeNodeKind.Label, TreeNodeKind.Directive のときのみ使用
     option: string; // this.kind == TreeNodeKind.Directive のときのみ使用
 
     constructor() {
@@ -46,7 +46,6 @@ export class TreeBuilder {
 
     constructor(head: Token) {
         this.token = head;
-
     }
 
     roll(): void {
@@ -57,9 +56,11 @@ export class TreeBuilder {
     }
 
     consumeReserved(op: string): boolean {
-        if (this.token == null ||
+        if (
+            this.token == null ||
             this.token?.kind != TokenKind.Reserved ||
-            this.token?.str != op) {
+            this.token?.str != op
+        ) {
             return false;
         }
         this.roll();
@@ -67,9 +68,11 @@ export class TreeBuilder {
     }
 
     consumeText(str: string): boolean {
-        if (this.token == null ||
+        if (
+            this.token == null ||
             this.token?.kind != TokenKind.Text ||
-            this.token?.str != str) {
+            this.token?.str != str
+        ) {
             return false;
         }
         this.roll();
@@ -77,17 +80,18 @@ export class TreeBuilder {
     }
 
     expectReserved(op: string): void {
-        if (this.token == null ||
+        if (
+            this.token == null ||
             this.token?.kind != TokenKind.Reserved ||
-            this.token?.str != op) {
+            this.token?.str != op
+        ) {
             throw new Error(`${op}ではありません`);
         }
         this.roll();
     }
 
     expectText(): Token {
-        if (this.token == null ||
-            this.token?.kind != TokenKind.Text) {
+        if (this.token == null || this.token?.kind != TokenKind.Text) {
             throw new Error(`$Textではありません`);
         }
         let crnt = this.token;
@@ -96,15 +100,13 @@ export class TreeBuilder {
     }
 
     atEof(): boolean {
-        if (this.token == null ||
-            this.token?.kind != TokenKind.Eof) {
+        if (this.token == null || this.token?.kind != TokenKind.Eof) {
             return false;
         }
         return true;
     }
 
     public build_tree(): TreeNode | null {
-
         let head = new TreeNode();
         head.next = null;
         let cur: TreeNode | null = head;
@@ -158,55 +160,46 @@ export class TreeBuilder {
         if (this.consumeText("mov")) {
             node.kind = TreeNodeKind.Mov;
             node.lhs = this.value();
-            this.expectReserved(',');
+            this.expectReserved(",");
             node.rhs = this.value();
-        }
-        else if (this.consumeText("ret")) {
+        } else if (this.consumeText("ret")) {
             node.kind = TreeNodeKind.Ret;
-        }
-        else if (this.consumeText("push")) {
+        } else if (this.consumeText("push")) {
             node.kind = TreeNodeKind.Push;
             node.lhs = this.value();
-        }
-        else if (this.consumeText("pop")) {
+        } else if (this.consumeText("pop")) {
             node.kind = TreeNodeKind.Pop;
             node.lhs = this.value(); // TODO: numは多分禁止されてる
-        }
-        else if (this.consumeText("cmp")) {
+        } else if (this.consumeText("cmp")) {
             node.kind = TreeNodeKind.Cmp;
             node.lhs = this.value();
-            this.expectReserved(',');
+            this.expectReserved(",");
             node.rhs = this.value();
-        }
-        else if (this.consumeText("je")) {
+        } else if (this.consumeText("je")) {
             node.kind = TreeNodeKind.Je;
             let assumeLabelToken = this.expectText();
             let assumeLabel = new TreeNode();
             assumeLabel.kind = TreeNodeKind.LabelFrom;
             assumeLabel.name = assumeLabelToken.str;
             node.lhs = assumeLabel;
-        }
-        else if (this.consumeText("jmp")) {
+        } else if (this.consumeText("jmp")) {
             node.kind = TreeNodeKind.Jmp;
             let assumeLabelToken = this.expectText();
             let assumeLabel = new TreeNode();
             assumeLabel.kind = TreeNodeKind.LabelFrom;
             assumeLabel.name = assumeLabelToken.str;
             node.lhs = assumeLabel;
-        }
-        else if (this.consumeText("add")) {
+        } else if (this.consumeText("add")) {
             node.kind = TreeNodeKind.Add;
             node.lhs = this.value();
-            this.expectReserved(',');
+            this.expectReserved(",");
             node.rhs = this.value();
-        }
-        else if (this.consumeText("sub")) {
+        } else if (this.consumeText("sub")) {
             node.kind = TreeNodeKind.Sub;
             node.lhs = this.value();
-            this.expectReserved(',');
+            this.expectReserved(",");
             node.rhs = this.value();
-        }
-        else {
+        } else {
             throw new Error("Not implemented.");
         }
         return node;
@@ -219,15 +212,13 @@ export class TreeBuilder {
             node.val = this.token?.val ?? -1;
             this.roll();
             return node;
-        }
-        else if (this.consumeReserved('[')) {
+        } else if (this.consumeReserved("[")) {
             let node = new TreeNode();
             node.kind = TreeNodeKind.RegistRef;
             node.lhs = this.reg();
-            this.expectReserved(']');
+            this.expectReserved("]");
             return node;
-        }
-        else {
+        } else {
             return this.reg();
         }
     }
@@ -238,13 +229,12 @@ export class TreeBuilder {
 
         for (let i = 0; i < regList.length; i++) {
             const reg = regList[i];
-            if (this.token?.str == reg
-            ) {
+            if (this.token?.str == reg) {
                 node.name = reg;
                 this.roll();
                 return node;
             }
-        };
+        }
 
         throw new Error("Invalid regist.");
     }

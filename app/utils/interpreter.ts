@@ -1,5 +1,5 @@
-import { TreeBuilder, TreeNode } from './parser';
-import { Token } from './tokenizer';
+import { TreeBuilder, TreeNode } from "./parser";
+import { Token } from "./tokenizer";
 
 export function interpret(assemblyText: string): string[] {
     let tok = Token.tokenize(assemblyText);

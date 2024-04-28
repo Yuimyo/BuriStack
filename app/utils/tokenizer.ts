@@ -30,12 +30,12 @@ function startsWith(line: string, offset: number, str: string): boolean {
 
 function isIdent1(c: string): boolean {
     if (c == undefined || c.length != 1) return false;
-    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '_';
+    return ("a" <= c && c <= "z") || ("A" <= c && c <= "Z") || c == "_";
 }
 
 function isIdent2(c: string): boolean {
     if (c == undefined || c.length != 1) return false;
-    return isIdent1(c) || ('0' <= c && c <= '9');
+    return isIdent1(c) || ("0" <= c && c <= "9");
 }
 
 /**
@@ -43,12 +43,12 @@ function isIdent2(c: string): boolean {
  */
 function isAlNum(c: string): boolean {
     if (c == undefined || c.length != 1) return false;
-    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '_';
+    return ("a" <= c && c <= "z") || ("A" <= c && c <= "Z") || c == "_";
 }
 
 function isNum(c: string): boolean {
     if (c == undefined || c.length != 1) return false;
-    return ('0' <= c && c <= '9');
+    return "0" <= c && c <= "9";
 }
 
 /**
@@ -99,10 +99,10 @@ export class Token {
         let head: Token = new Token();
         let cur: Token = head;
 
-        const lines: string[] = data.split('\n');
+        const lines: string[] = data.split("\n");
         lines.forEach((line, line_index) => {
             //console.log(`Line ${line_index + 1}: ${line}`);
-            for (let i = 0; i < line.length;) {
+            for (let i = 0; i < line.length; ) {
                 let c = line[i];
 
                 if (isSpace(c)) {
@@ -110,15 +110,16 @@ export class Token {
                     continue;
                 }
 
-                if (c == ';') {
+                if (c == ";") {
                     break;
                 }
 
-                if (c == ',' ||
-                    c == '[' ||
-                    c == ']'
-                ) {
-                    cur = joinNewToken(TokenKind.Reserved, cur, line.substring(i, i + 1));
+                if (c == "," || c == "[" || c == "]") {
+                    cur = joinNewToken(
+                        TokenKind.Reserved,
+                        cur,
+                        line.substring(i, i + 1),
+                    );
                     i++;
                     continue;
                 }
@@ -129,8 +130,7 @@ export class Token {
                     do {
                         j++;
                         crntc = line[j];
-                    }
-                    while (isNum(crntc));
+                    } while (isNum(crntc));
 
                     const len = j - i;
                     const str = line.substring(i, i + len);
@@ -140,7 +140,7 @@ export class Token {
                     continue;
                 }
 
-                if (isIdent1(c) || c == '.') {
+                if (isIdent1(c) || c == ".") {
                     let j = i;
                     let crntc = line[i];
                     let isCoron = false;
@@ -149,13 +149,13 @@ export class Token {
                         crntc = line[j];
 
                         if (isCoron) break;
-                    }
-                    while (isIdent2(crntc) || (isCoron = crntc == ':'));
+                    } while (isIdent2(crntc) || (isCoron = crntc == ":"));
                     const len = j - i;
                     const str = line.substring(i, i + len);
                     let kind = TokenKind.Text;
                     if (isDirective(str)) {
-                        if (isCoron) throw new Error("Is directive and label...?");
+                        if (isCoron)
+                            throw new Error("Is directive and label...?");
                         kind = TokenKind.Directive;
                     }
                     if (isCoron) kind = TokenKind.Label;
