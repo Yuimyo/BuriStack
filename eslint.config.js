@@ -8,6 +8,7 @@ import reactJSXRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import importPlugin from "eslint-plugin-import";
+import localRulesPlugin from "eslint-local";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 const compat = new FlatCompat();
@@ -82,13 +83,18 @@ export default tseslint.config(
         files: ["**/*.{ts,tsx}"],
         plugins: {
             import: importPlugin,
-            "@typescript-eslint": tseslint,
+            "typescript-eslint": tseslint,
+            "local-rules": localRulesPlugin,
         },
         extends: [
             ...tseslint.configs.recommended,
             ...compat.config(importPlugin.configs.recommended),
             ...compat.config(importPlugin.configs.typescript),
         ],
+        rules: {
+            "@typescript-eslint/no-unused-vars": ["off", {}],
+            "local-rules/no-default-error-type": "error",
+        },
         settings: {
             "import/resolver": {
                 node: {
@@ -97,9 +103,6 @@ export default tseslint.config(
                 typescript: {
                     alwaysTryTypes: true,
                     project: "tsconfig.json",
-                },
-                rules: {
-                    "@typescript-eslint/no-unused-vars": ["off", {}],
                 },
             },
         },
