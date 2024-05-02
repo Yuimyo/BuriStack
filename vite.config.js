@@ -7,18 +7,18 @@ import tsconfigPaths from "vite-tsconfig-paths";
 installGlobals();
 
 export default defineConfig({
-  plugins: [remix({
-    ignoredRouteFiles: [
-      "**/*.css",
-      "**/*.css.map",
-      "**/*.scss",
+    plugins: [
+        remix({
+            ignoredRouteFiles: ["**/*.css", "**/*.css.map", "**/*.scss"],
+        }),
+        tsconfigPaths(),
     ],
-  }), tsconfigPaths()],
-  css: {
-    modules: {
-      localsConvention: "camelCaseOnly"
-    }
-  },
-  test: {
-  },
+    css: {
+        modules: {
+            localsConvention: "camelCaseOnly",
+        },
+    },
+    test: {
+        setupFiles: ["./eslint-local/viteslint.setup.ts"],
+    },
 });

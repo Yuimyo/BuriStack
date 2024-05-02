@@ -12,9 +12,11 @@ ruleTester.run("no-default-error-type", rule, {
     invalid: [
         {
             code: 'throw new Error("hoge.");',
-            errors: [],
+            errors: [
+                {
+                    messageId: "defaulterror",
+                },
+            ],
         },
     ],
 });
-
-console.log("All tests passed!");

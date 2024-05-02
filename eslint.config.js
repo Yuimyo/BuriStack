@@ -23,6 +23,7 @@ export default tseslint.config(
             ".env",
             "!**/.server",
             "!**/.client",
+            "eslint-local",
         ],
     },
     {
@@ -90,10 +91,10 @@ export default tseslint.config(
             ...tseslint.configs.recommended,
             ...compat.config(importPlugin.configs.recommended),
             ...compat.config(importPlugin.configs.typescript),
+            ...localRulesPlugin.configs.all,
         ],
         rules: {
             "@typescript-eslint/no-unused-vars": ["off", {}],
-            "local-rules/no-default-error-type": "error",
         },
         settings: {
             "import/resolver": {
