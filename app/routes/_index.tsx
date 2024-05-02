@@ -5,6 +5,9 @@ import Button, { links as buttonLinks } from "~/components/Button";
 import AssemblyCodeInput, {
     links as assemblyCodeInputLinks,
 } from "~/components/AssemblyCodeInput";
+import AssemblyCodeVisualizer, {
+    links as assemblyCodeVisualizerLinks,
+} from "~/components/AssemblyCodeVisualizer";
 import AssemblyCodeSelector, {
     links as assemblyCodeSelectorLinks,
 } from "~/components/AssemblyCodeSelector";
@@ -31,6 +34,7 @@ export const links: LinksFunction = () => [
     { rel: "stylesheet", href: styles },
     ...buttonLinks(),
     ...assemblyCodeInputLinks(),
+    ...assemblyCodeVisualizerLinks(),
     ...assemblyCodeSelectorLinks(),
     ...bracketEndLinks(),
     ...stackItemLinks(),
@@ -95,6 +99,12 @@ export default function Index() {
                             onChange={(e) => {
                                 handleTextInput(e.target.value);
                             }}
+                        />
+                    </div>
+                    <div className="code-visualize">
+                        <AssemblyCodeVisualizer
+                            defaultValue={0}
+                            data={asmParsedLine}
                         />
                     </div>
                     <div className="code-select">
