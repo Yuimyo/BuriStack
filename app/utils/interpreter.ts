@@ -1,7 +1,7 @@
-import { TreeBuilder, TreeNode } from "./parser";
+import { TreeBuilder, TreeNode } from "./ast_builder";
 import { Token } from "./tokenizer";
 
-export function interpret(assemblyText: string): string[] {
+export function to_jsons(assemblyText: string): string[] {
     const tok = Token.tokenize(assemblyText);
     if (tok == null) throw new FailedToTokenizeError("Head token is null.");
 

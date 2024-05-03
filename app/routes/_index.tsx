@@ -1,5 +1,5 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { interpret } from "~/utils/interpreter";
+import { to_jsons } from "~/utils/interpreter";
 import styles from "./index.css?url";
 import Button, { links as buttonLinks } from "~/components/Button";
 import AssemblyCodeInput, {
@@ -76,7 +76,7 @@ export default function Index() {
     };
 
     const handleExecute = () => {
-        const tree_jsons = interpret(asm_tmp);
+        const tree_jsons = to_jsons(asm_tmp);
         const lines: string[] = [];
         asm.split(/\n/).forEach((line, index) => {
             if (line.trim() != "") lines.push(line);
