@@ -66,7 +66,7 @@ function isRegister(line: string, i: number): number {
 }
 
 function joinNewToken(kind: TokenKind, crnt: Token, str: string): Token {
-    let tok = Token.create(kind, str);
+    const tok = Token.create(kind, str);
     crnt.next = tok;
 
     return tok;
@@ -86,7 +86,7 @@ export class Token {
     }
 
     static create(kind: TokenKind, str: string): Token {
-        let token = new Token();
+        const token = new Token();
         token.kind = kind;
         token.str = str;
         if (kind == TokenKind.Num) {
@@ -96,14 +96,14 @@ export class Token {
     }
 
     static tokenize(data: string): Token | null {
-        let head: Token = new Token();
+        const head: Token = new Token();
         let cur: Token = head;
 
         const lines: string[] = data.split("\n");
         lines.forEach((line, line_index) => {
             //console.log(`Line ${line_index + 1}: ${line}`);
             for (let i = 0; i < line.length; ) {
-                let c = line[i];
+                const c = line[i];
 
                 if (isSpace(c)) {
                     i++;
@@ -155,7 +155,9 @@ export class Token {
                     let kind = TokenKind.Text;
                     if (isDirective(str)) {
                         if (isCoron)
-                            throw new Error("Is directive and label...?");
+                            throw new AmbiguousTokenSituationError(
+                                "Is directive and label...?",
+                            );
                         kind = TokenKind.Directive;
                     }
                     if (isCoron) kind = TokenKind.Label;
@@ -174,3 +176,5 @@ export class Token {
         return head.next;
     }
 }
+
+class AmbiguousTokenSituationError extends Error {}

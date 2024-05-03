@@ -10,6 +10,7 @@ export const links: LinksFunction = () => [
 
 interface StackStatusViewerProps {}
 
+// eslint-disable-next-line no-empty-pattern
 export default function StackStatusViewer({}: StackStatusViewerProps) {
     const data: string[] = [
         "ok",

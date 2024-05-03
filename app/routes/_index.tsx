@@ -88,7 +88,11 @@ export default function Index() {
         <div className="route-index">
             <div className="header">
                 <div className="logo-container">
-                    <img className="logo-data" src={logo} />
+                    <img
+                        className="logo-data"
+                        src={logo}
+                        alt="ここにはロゴが表示される筈...!"
+                    />
                 </div>
                 <Button onClick={() => handleExecute()}>実行</Button>
             </div>
