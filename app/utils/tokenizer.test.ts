@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { Token, TokenKind } from "./tokenizer";
 
 function isAlmostSameToken(actual: Token | null, expectWithoutNext: Token | null): Token | null {
@@ -18,64 +18,88 @@ function isAlmostSameToken(actual: Token | null, expectWithoutNext: Token | null
     }
 }
 
-test('tokenize1', () => {
-    let tok = Token.tokenize(`mov 0, rsp`);
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Num, "0"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rsp"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
-    expect(tok).toBeNull();
-});
-
-test('tokenize no comment', () => {
-    let tok = Token.tokenize(`  
-    ; なるほどね
-    mov rsp, rbp ;hmm..  mov rsp, rbp
-    `);
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rsp"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
-    expect(tok).toBeNull();
-});
-
-test('tokenize directive', () => {
-    let tok = Token.tokenize(`  
-    .intel_syntax noprefix
-    .globl main
-    main:
-      push rbp
-    `);
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Directive, ".intel_syntax"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "noprefix"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Directive, ".globl"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "main"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Label, "main:"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "push"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
-    expect(tok).toBeNull();
-});
-
-test('tokenize bracket', () => {
-    let tok = Token.tokenize(`  
-      mov [rax], rbp
-    `);
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, "["));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rax"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, "]"));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
-
-    tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
-    expect(tok).toBeNull();
+describe('valid assembly imputs', () => {
+    test('normal', () => {
+        let tok = Token.tokenize(`mov 0, rsp`);
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Num, "0"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rsp"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
+        expect(tok).toBeNull();
+    });
+    
+    test('includes comment', () => {
+        let tok = Token.tokenize(`  
+        ; なるほどね
+        mov rsp, rbp ;hmm..  mov rsp, rbp
+        `);
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rsp"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
+        expect(tok).toBeNull();
+    });
+    
+    test('judge directive', () => {
+        let tok = Token.tokenize(`  
+        .intel_syntax noprefix
+        .globl main
+        main:
+          push rbp
+        `);
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Directive, ".intel_syntax"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "noprefix"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Directive, ".globl"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "main"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Label, "main:"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "push"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
+        expect(tok).toBeNull();
+    });
+    
+    test('tokenize bracket', () => {
+        let tok = Token.tokenize(`  
+          mov [rax], rbp
+        `);
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "mov"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, "["));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rax"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, "]"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Reserved, ","));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
+        expect(tok).toBeNull();
+    });
+    
+    test('omit a lot of empty new lines', () => {
+        let tok = Token.tokenize(`
+        
+        
+        push rbp
+    
+    
+    
+    
+        push rsp
+        
+    
+        `);
+    
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "push"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rbp"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "push"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Text, "rsp"));
+        tok = isAlmostSameToken(tok, Token.create(TokenKind.Eof, ""));
+        expect(tok).toBeNull();
+    })
 });
